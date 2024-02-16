@@ -1,0 +1,42 @@
+.body{
+    height: 100vh;
+    width: 100vb;
+}
+
+.container{
+    width:80vw;
+    position: absolute;
+    padding: 15px;
+    background-color: snow;
+    box-shadow: 10px 5px 5px gray;
+    border-radius: 10px;
+    margin-bottom: 10vh;
+    margin-top: 80vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5vw;
+    margin-right: 10vw;
+    gap:25px;
+}
+
+button{
+    font-size: 18px;
+    width:100px;
+    padding: 10px;
+    border-radius: 15px;
+    color: black;
+}
+.Red{
+    background-color: red;
+}
+.Yellow{
+    background-color: yellow;
+}
+.Purple{
+    background-color: purple;
+}
+.Cyan{
+    background-color: cyan;
+}
