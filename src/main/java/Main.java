@@ -24,12 +24,20 @@ public class Main {
                 if(Arrays.stream(commands).anyMatch(command -> command.equals(parts[1]))) {
                     System.out.println(parts[1] + " is a shell builtin");
                 }
-                else if(Arrays.stream(pathDirs).anyMatch(pathDir -> pathDir.contains(parts[1]))) {
-                    System.out.println(parts[1] + " is " + pathDirs[0]);
-                } else  {
-                    System.out.println(parts[1] + " not found");
-                }
-            }
+                else {
+                    boolean found = false;
+                    for(String dir : pathDirs) {
+                        java.io.File file = new java.io.File(dir, parts[1]);
+                        if(file.exists() && file.canExecute()) {
+                            System.out.println(parts[1] + " is " + file.getAbsolutePath());
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found) {
+                        System.out.println(parts[1] + ": not found");
+                    }
+            }}
             else {
                 System.out.println(input + ": command not found");
             }
