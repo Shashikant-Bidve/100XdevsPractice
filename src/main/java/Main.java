@@ -21,7 +21,7 @@ public class Main {
                     System.out.println(parts[1] + " is a shell builtin");
                 }
                 else {
-                    System.out.println(parts[1] + ": command not found");
+                    System.out.println(parts[1] + ": not found");
                 }
             }
             else {
