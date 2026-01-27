@@ -8,7 +8,23 @@ public class Main {
             System.out.print("$ ");
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
-            if(input.equals("exit")) {
+
+            boolean externalCommand = false;
+            String path = System.getenv("PATH");
+            String[] pathDirs = path.split(":");
+            for (String pathDir : pathDirs) {
+                java.io.File file = new java.io.File(pathDir, input.split(" ")[0]);
+                if (file.exists() && file.canExecute()) {externalCommand = true;}
+            }
+
+            if(externalCommand) {
+                String[] Args = input.split(" ");
+                ProcessBuilder pb = new ProcessBuilder(Args);
+                pb.inheritIO();
+                Process process = pb.start();
+                process.waitFor();
+            }
+            else if(input.equals("exit")) {
                 break;
             }
             else if(input.startsWith("echo")) {
@@ -17,9 +33,6 @@ public class Main {
             else if(input.startsWith("type")) {
                 String[] parts = input.split(" ");
                 String[] commands = {"echo", "type", "exit"};
-
-                String path = System.getenv("PATH");
-                String[] pathDirs = path.split(":");
 
                 if(Arrays.stream(commands).anyMatch(command -> command.equals(parts[1]))) {
                     System.out.println(parts[1] + " is a shell builtin");
