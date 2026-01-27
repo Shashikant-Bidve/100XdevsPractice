@@ -7,6 +7,6 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        System.out.println(input + " is an invalid command");
+        System.out.println(input + ":  command not foun");
     }
 }
