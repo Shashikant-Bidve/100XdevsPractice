@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -12,6 +13,16 @@ public class Main {
             }
             else if(input.startsWith("echo")) {
                 System.out.println(input.substring(5));
+            }
+            else if(input.startsWith("type")) {
+                String[] parts = input.split(" ");
+                String[] commands = {"echo", "type", "exit"};
+                if(Arrays.stream(commands).anyMatch(command -> command.equals(parts[1]))) {
+                    System.out.println(parts[1] + " is a shell builtin");
+                }
+                else {
+                    System.out.println(parts[1] + ": command not found");
+                }
             }
             else {
                 System.out.println(input + ": command not found");
