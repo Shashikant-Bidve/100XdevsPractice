@@ -1,4 +1,3 @@
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -55,29 +54,17 @@ public class Main {
             else if(input.startsWith("pwd")) {
                 System.out.println(System.getProperty("user.dir"));
             }
-            else if (input.startsWith("cd")) {
-                Path currentDirectory = Path.of(System.getProperty("user.dir"));
-                String[] arguments = input.split(" ");
-                Path newDirectory;
-                String home = System.getProperty("user.home");
-                if (arguments.length == 1) {
-                    newDirectory = java.nio.file.Path.of(home);
-                } else if (arguments[1].startsWith("~")) {
-                    String replaced = arguments[1].replaceFirst("~", home);
-                    newDirectory = java.nio.file.Path.of(replaced).normalize();
-                } else {
-                    java.nio.file.Path inputPath = java.nio.file.Path.of(arguments[1]);
-                    newDirectory =
-                            inputPath.isAbsolute()
-                                    ? inputPath
-                                    : currentDirectory.resolve(inputPath).normalize();
-                }
-
-                if (java.nio.file.Files.exists(newDirectory) && java.nio.file.Files.isDirectory(newDirectory)) {
-                    currentDirectory = newDirectory;
-                    System.setProperty("user.dir", currentDirectory.toString());
-                } else {
-                    System.out.println("cd: " + (arguments.length > 1 ? arguments[1] : "") + ": No such file or directory");
+            else  if(input.startsWith("cd")) {
+                String[] parts = input.split(" ");
+                if(parts.length > 1) {
+                    java.io.File dir = new java.io.File(parts[1]);
+                    if(dir.exists() && dir.isDirectory()) {
+                        System.setProperty("user.dir", dir.getAbsolutePath());
+                        System.out.println(System.getProperty("user.dir"));
+                    }
+                    else {
+                        System.out.println("cd: " + parts[1] + ": No such file or directory: ");
+                    }
                 }
             }
             else {
