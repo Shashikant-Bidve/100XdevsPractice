@@ -32,7 +32,7 @@ public class Main {
             }
             else if(input.startsWith("type")) {
                 String[] parts = input.split(" ");
-                String[] commands = {"echo", "type", "exit", "pwd"};
+                String[] commands = {"echo", "type", "exit", "pwd", "cd"};
 
                 if(Arrays.stream(commands).anyMatch(command -> command.equals(parts[1]))) {
                     System.out.println(parts[1] + " is a shell builtin");
@@ -53,6 +53,18 @@ public class Main {
             }}
             else if(input.startsWith("pwd")) {
                 System.out.println(System.getProperty("user.dir"));
+            }
+            else  if(input.startsWith("cd")) {
+                String[] parts = input.split(" ");
+                if(parts.length > 1) {
+                    java.io.File dir = new java.io.File(parts[1]);
+                    if(dir.exists() && dir.isDirectory()) {
+                        System.setProperty("user.dir", dir.getAbsolutePath());
+                    }
+                    else {
+                        System.out.println("cd: " + parts[1] + ": No such file or directory: ");
+                    }
+                }
             }
             else {
                 System.out.println(input + ": command not found");
