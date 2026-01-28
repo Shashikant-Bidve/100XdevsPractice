@@ -51,6 +51,9 @@ public class Main {
                         System.out.println(parts[1] + ": not found");
                     }
             }}
+            else if(input.startsWith("pwd")) {
+                System.out.println(System.getProperty("user.dir"));
+            }
             else {
                 System.out.println(input + ": command not found");
             }
