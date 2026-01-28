@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -19,13 +20,15 @@ public class Main {
                 if (file.exists() && file.canExecute()) {externalCommand = true;}
             }
 
-            if(externalCommand) {
-                String[] Args = input.split(" ");
-                ProcessBuilder pb = new ProcessBuilder(Args);
+            if (externalCommand) {
+                String[] arg = input.split(" ");
+                ProcessBuilder pb = new ProcessBuilder(arg);
+                pb.directory(new File(currDir));
                 pb.inheritIO();
-                Process process = pb.start();
-                process.waitFor();
+                Process p = pb.start();
+                p.waitFor();
             }
+
             else if(input.equals("exit")) {
                 break;
             }
@@ -56,15 +59,17 @@ public class Main {
             else if(input.startsWith("pwd")) {
                 System.out.println(currDir);
             }
-            else  if(input.startsWith("cd")) {
+            else if (input.startsWith("cd")) {
                 String[] parts = input.split(" ");
-                if(parts.length > 1) {
-                    java.io.File dir = new java.io.File(parts[1]);
-                    if(dir.exists() && dir.isDirectory()) {
-                        currDir = dir.getAbsolutePath();
-                    }
-                    else {
-                        System.out.println("cd: " + parts[1] + ": No such file or directory: ");
+                if (parts.length > 1) {
+                    File dir = parts[1].startsWith("/")
+                            ? new File(parts[1])
+                            : new File(currDir, parts[1]);
+
+                    if (dir.exists() && dir.isDirectory()) {
+                        currDir = dir.getCanonicalPath();
+                    } else {
+                        System.out.println("cd: " + parts[1] + ": No such file or directory");
                     }
                 }
             }
