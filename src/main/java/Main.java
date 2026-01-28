@@ -32,7 +32,7 @@ public class Main {
             }
             else if(input.startsWith("type")) {
                 String[] parts = input.split(" ");
-                String[] commands = {"echo", "type", "exit"};
+                String[] commands = {"echo", "type", "exit", "pwd"};
 
                 if(Arrays.stream(commands).anyMatch(command -> command.equals(parts[1]))) {
                     System.out.println(parts[1] + " is a shell builtin");
