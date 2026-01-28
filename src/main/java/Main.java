@@ -4,6 +4,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception {
         // TODO: Uncomment the code below to pass the first stage
+        String currDir = System.getProperty("user.dir");
+
         while(true) {
             System.out.print("$ ");
             Scanner scanner = new Scanner(System.in);
@@ -52,15 +54,14 @@ public class Main {
                     }
             }}
             else if(input.startsWith("pwd")) {
-                System.out.println(System.getProperty("user.dir"));
+                System.out.println(currDir);
             }
             else  if(input.startsWith("cd")) {
                 String[] parts = input.split(" ");
                 if(parts.length > 1) {
                     java.io.File dir = new java.io.File(parts[1]);
                     if(dir.exists() && dir.isDirectory()) {
-                        System.setProperty("user.dir", dir.getAbsolutePath());
-                        System.out.println(System.getProperty("user.dir"));
+                        currDir = dir.getAbsolutePath();
                     }
                     else {
                         System.out.println("cd: " + parts[1] + ": No such file or directory: ");
