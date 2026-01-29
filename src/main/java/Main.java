@@ -63,7 +63,10 @@ public class Main {
                 String[] parts = input.split(" ");
                 if (parts.length > 1) {
                     if(parts[1].equals("~")) {
-                        currDir = System.getProperty("user.home");
+                        File dir =  new File(parts[1]);
+                        if (dir.exists()  && dir.isDirectory()) {
+                            currDir = dir.getCanonicalPath();
+                        }
                     } else {
                         File dir = parts[1].startsWith("/")
                                 ? new File(parts[1])
