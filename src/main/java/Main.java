@@ -64,9 +64,9 @@ public class Main {
                 String target;
 
                 if (parts.length == 1 || parts[1].equals("~")) {
-                    target = System.getProperty("user.home");
+                    target = System.getenv("HOME");
                 } else if (parts[1].startsWith("~/")) {
-                    target = System.getProperty("user.home") + parts[1].substring(1);
+                    target = System.getenv("HOME") + parts[1].substring(1);
                 } else {
                     target = parts[1];
                 }
