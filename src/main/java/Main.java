@@ -61,23 +61,24 @@ public class Main {
             }
             else if (input.startsWith("cd")) {
                 String[] parts = input.split(" ");
-                if (parts.length > 1) {
-                    if(parts[1].equals("~")) {
-                        File dir =  new File(System.getProperty("user.home"));
-                        if (dir.exists()  && dir.isDirectory()) {
-                            currDir = dir.getCanonicalPath();
-                        }
-                    } else {
-                        File dir = parts[1].startsWith("/")
-                                ? new File(parts[1])
-                                : new File(currDir, parts[1]);
+                String target;
 
-                        if (dir.exists() && dir.isDirectory()) {
-                            currDir = dir.getCanonicalPath();
-                        } else {
-                            System.out.println("cd: " + parts[1] + ": No such file or directory");
-                        }
-                    }
+                if (parts.length == 1 || parts[1].equals("~")) {
+                    target = System.getProperty("user.home");
+                } else if (parts[1].startsWith("~/")) {
+                    target = System.getProperty("user.home") + parts[1].substring(1);
+                } else {
+                    target = parts[1];
+                }
+
+                File dir = target.startsWith("/")
+                        ? new File(target)
+                        : new File(currDir, target);
+
+                if (dir.exists() && dir.isDirectory()) {
+                    currDir = dir.getCanonicalPath();
+                } else {
+                    System.out.println("cd: " + parts[1] + ": No such file or directory");
                 }
             }
             else {
